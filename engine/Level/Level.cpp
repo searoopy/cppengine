@@ -29,6 +29,12 @@ namespace wanted
 	{
 		for (Actor* actor : actors)
 		{
+			//이미 beginplay 호출된 액터는 건너뛰기.
+			if (actor->HasBeganPlay())
+			{
+				continue;
+			}
+
 			actor->BeginPlay();
 		}
 	}
@@ -45,6 +51,12 @@ namespace wanted
 		{
 			actor->Draw();
 		}
+	}
+
+	void Level::AddNewActor(Actor* newActor)
+	{
+		//todo 나중에 프레임 처리 고려해서 따로 추가 작업 해야함.
+		actors.emplace_back(newActor);
 	}
 
 

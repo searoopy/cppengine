@@ -17,6 +17,11 @@ namespace wanted
 
 	Engine::~Engine()
 	{
+		if (mainLevel)
+		{
+			delete mainLevel;
+			mainLevel = nullptr;
+		}
 	}
 
 	void Engine::Run()
@@ -40,7 +45,7 @@ namespace wanted
 
 
 		//단위 :초
-		float targetFrameTime = 1.0f;
+		float targetFrameTime = 60.0f;   ///
 		float oneFrameTime = 1.0f / targetFrameTime;
 
 
@@ -154,15 +159,15 @@ namespace wanted
 	void Engine::Tick(float deltaTime)
 	{
 
-		/*std::cout << "Ticking... Delta Time: " << deltaTime << " seconds. ::" <<
-			"FPS" << 1.0f / deltaTime << "\n";
+		//std::cout << "Ticking... Delta Time: " << deltaTime << " seconds. ::" <<
+		//	"FPS" << 1.0f / deltaTime << "\n";
 
 
 		if (GetKeyDown(VK_ESCAPE))
 		{
 			std::cout << "Escape key pressed. Quitting engine.\n";
 			QuitEngine();
-		}*/
+		}
 
 
 		//레벨에 이벤트 흘리기.
