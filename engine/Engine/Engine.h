@@ -3,18 +3,10 @@
 namespace wanted
 {
 	class Level;
+	class Input;
 
 	class WANTED_API Engine
 	{
-		
-		//데이터.
-		struct KeyState
-		{
-			bool isKeyDown = false;
-			bool wasKeyDown = false;
-		};
-
-
 
 	public:
 		Engine();
@@ -24,15 +16,12 @@ namespace wanted
 
 		void QuitEngine();
 
-		bool GetKeyDown(int keyCode);
-		bool GetKeyUp(int keyCode);
-		bool GetKeyKey(int keyCode);
-
-
 		void SetNewLevel(class Level* newLevel);
 
+
+		static Engine& Get();
+
 	private:
-		void ProcessInput();
 
 		void BeginPlay();
 
@@ -44,11 +33,15 @@ namespace wanted
 		//종료 플래그.
 		bool isQuit = false;
 
-		//키 상태 저장용 배열.
-		KeyState keyStates[255] = {};
+
+		//입력 관리자
+		Input* input = nullptr;
 
 		//메인 레벨
 		class Level* mainLevel = nullptr;
+
+		static Engine* instance;
+
 
 	};
 }

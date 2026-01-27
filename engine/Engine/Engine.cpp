@@ -4,14 +4,19 @@
 
 #include "Engine.h"
 #include "Level\Level.h"
+#include "Core/Input.h"
 
 
 
 namespace wanted
 {
+	Engine* Engine::instance = nullptr;
+
 
 	Engine::Engine()
 	{
+		instance = this;
+		input = new Input();
 	}
 
 
@@ -65,7 +70,7 @@ namespace wanted
 			//고정프레임
 			if (deltaTime >= oneFrameTime)
 			{
-				ProcessInput();
+				input->ProcessInput();
 
 
 				BeginPlay();
@@ -75,13 +80,7 @@ namespace wanted
 				previousTime = currentTime;
 
 
-				// 키 마다의 입력 읽기.
-			// !!! 운영체제가 제공하는 기능을 사용할 수 밖에 없음.
-				for (int ix = 0; ix < 255; ++ix)
-				{
-					keyStates[ix].isKeyDown
-						= (GetAsyncKeyState(ix) & 0x8000) > 0 ? true : false;
-				}
+				input->SavePreviousInputStates();
 
 			}
 		}
@@ -97,23 +96,6 @@ namespace wanted
 		isQuit = true;
 	}
 
-	bool Engine::GetKeyDown(int keyCode)
-	{
-		//return false;
-		return keyStates[keyCode].isKeyDown
-			&& !keyStates[keyCode].wasKeyDown;
-	}
-
-	bool Engine::GetKeyUp(int keyCode)
-	{
-		return !keyStates[keyCode].isKeyDown
-			&& keyStates[keyCode].wasKeyDown;
-	}
-
-	bool Engine::GetKeyKey(int keyCode)
-	{
-		return keyStates[keyCode].isKeyDown;
-	}
 
 	void Engine::SetNewLevel(Level* newLevel)
 	{
@@ -131,18 +113,18 @@ namespace wanted
 		mainLevel = newLevel;
 	}
 
-	void Engine::ProcessInput()
+	Engine& Engine::Get()
 	{
-
-		// 키 마다의 입력 읽기.
-			// !!! 운영체제가 제공하는 기능을 사용할 수 밖에 없음.
-		for (int ix = 0; ix < 255; ++ix)
+		if (!instance)
 		{
-			keyStates[ix].isKeyDown
-				= (GetAsyncKeyState(ix) & 0x8000) > 0 ? true : false;
+			//silent is violent.
+			std::cout << "error : engine::get(). instance is null\n";
+			__debugbreak();
 		}
-
+		return *instance;
 	}
+
+	
 
 	void Engine::BeginPlay()
 	{
@@ -162,12 +144,6 @@ namespace wanted
 		//std::cout << "Ticking... Delta Time: " << deltaTime << " seconds. ::" <<
 		//	"FPS" << 1.0f / deltaTime << "\n";
 
-
-		if (GetKeyDown(VK_ESCAPE))
-		{
-			std::cout << "Escape key pressed. Quitting engine.\n";
-			QuitEngine();
-		}
 
 
 		//레벨에 이벤트 흘리기.
