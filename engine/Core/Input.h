@@ -6,7 +6,7 @@ namespace wanted
 {
 	class WANTED_API Input
 	{
-		friend class Engine;
+		friend class Engine;  ///엔진클래스에서만 인풋생성가능.
 
 		//데이터.
 		struct KeyState
@@ -15,7 +15,7 @@ namespace wanted
 			bool wasKeyDown = false;
 		};
 
-	private:
+	private: //아무곳에서나 생성하는것 방지.
 		Input();
 		~Input();
 

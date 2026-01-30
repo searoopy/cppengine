@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(disable: 4251)
 #include "Common/Common.h";
+#include "Common/RTTI.h"
 #include <vector>
 
 namespace wanted
@@ -8,8 +9,13 @@ namespace wanted
 
 	class Actor;
 
-	class WANTED_API Level
+	class WANTED_API Level : public RTTI
 	{
+
+	RTTI_DECLARATIONS(Level, RTTI)
+
+
+
 	public:
 		Level();
 		virtual ~Level();
@@ -21,9 +27,15 @@ namespace wanted
 
 		void AddNewActor(Actor* newActor);
 
+		void ProcessPendingActors();
+
 	protected:
 		//액터 배열.
 		std::vector<Actor*> actors;
+
+
+		//실행 중에 추가 요청된 액터의 배열.
+		std::vector<Actor*> pendingAddActors;
 
 	};
 

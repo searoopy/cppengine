@@ -3,6 +3,8 @@
 
 namespace wanted
 {
+
+
 	Level::Level()
 	{
 	}
@@ -10,6 +12,7 @@ namespace wanted
 	{
 		for (Actor*& actor : actors)
 		{
+
 
 			if (actor)
 			{
@@ -49,14 +52,77 @@ namespace wanted
 	{
 		for (Actor* actor : actors)
 		{
-			actor->Draw();
+
+			Actor* search = nullptr;
+			for (Actor* otherActor : actors)
+			{
+				// 같은 액터는 비교 안함.
+				if (actor == otherActor)
+				{
+					continue;
+				}
+
+				// 위치 비교.
+				if (actor->GetPosition() == otherActor->GetPosition())
+				{
+					search = otherActor;
+					break;
+				}
+			}
+
+			//같은 위치에 다른 액터가 없으면 그림.
+			if (!search)
+			{
+				actor->Draw();
+				continue;
+			}
+			//같은 위치에 다른 액터가 있는데 우선순위 높으면 그림.
+			if(search &&
+				actor->GetSortOrder() >= search->GetSortOrder())
+			{
+				actor->Draw();
+			}
+
 		}
 	}
 
 	void Level::AddNewActor(Actor* newActor)
 	{
-		//todo 나중에 프레임 처리 고려해서 따로 추가 작업 해야함.
-		actors.emplace_back(newActor);
+		//나중에 프레임 처리 고려해서 따로 추가 작업 해야함.
+		pendingAddActors.emplace_back(newActor);
+
+		newActor->SetOwner(this);
+
+	}
+
+	void Level::ProcessPendingActors()
+	{
+		for (int i = 0; i < static_cast<int>(actors.size()); )
+		{
+			if (actors[i]->DestroyRequested())
+			{
+				delete actors[i];
+				actors.erase(actors.begin() + i);
+				continue;
+			}
+			++i;
+
+		}
+
+		//추가 처리.
+
+		if (pendingAddActors.size() == 0)
+		{
+			return;
+		}
+		for (Actor* const actor : pendingAddActors)
+		{
+			actors.emplace_back(actor);
+		}
+
+		pendingAddActors.clear();
+
+
 	}
 
 

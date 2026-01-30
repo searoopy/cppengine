@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Level\Level.h"
 #include "Core/Input.h"
+#include "Utill/utill.h"
 
 
 
@@ -17,6 +18,12 @@ namespace wanted
 	{
 		instance = this;
 		input = new Input();
+
+
+		LoadSetting();
+
+		Utill::TurnOffCursor();
+
 	}
 
 
@@ -27,6 +34,15 @@ namespace wanted
 			delete mainLevel;
 			mainLevel = nullptr;
 		}
+
+
+		// 입력 관리자 제거.
+		if (input)
+		{
+			delete input;
+			input = nullptr;
+		}
+
 	}
 
 	void Engine::Run()
@@ -50,8 +66,10 @@ namespace wanted
 
 
 		//단위 :초
-		float targetFrameTime = 60.0f;   ///
-		float oneFrameTime = 1.0f / targetFrameTime;
+		//float targetFrameTime = 60.0f;   ///
+		setting.framerate
+			= setting.framerate == 0.0f ? 60.0f : setting.framerate;
+		float oneFrameTime = 1.0f / setting.framerate;
 
 
 		while (!isQuit)
@@ -82,13 +100,18 @@ namespace wanted
 
 				input->SavePreviousInputStates();
 
+
+
+				//레벨에 요청된 추가/제거 처리
+				if (mainLevel)
+				{
+					mainLevel->ProcessPendingActors();	
+				}
+
 			}
 		}
 
-
-		// todo : 정리 작업.
-		std::cout << "endgine has been shutdown\n";
-
+		Shutdown();
 	}
 
 	void Engine::QuitEngine()
@@ -125,6 +148,57 @@ namespace wanted
 	}
 
 	
+
+	void Engine::Shutdown()
+	{
+
+		// todo : 정리 작업.
+		std::cout << "endgine has been shutdown\n";
+
+
+		//커서 끄기.
+		Utill::TurnOnCursor();
+	}
+
+	void Engine::LoadSetting()
+	{
+		FILE* file = nullptr;
+		fopen_s(&file, "../Config/setting.txt", "rt");
+
+		if (!file)
+		{
+			fopen_s(&file, "./Config/setting.txt", "rt");
+
+		}
+		
+		if (!file)
+		{
+			std::cout << "file open fail\n";
+
+			__debugbreak();
+
+			return;
+
+		}
+
+
+
+		char buffer[2048] = {};
+
+		//파일에서 읽기.
+		size_t readsize = fread(buffer, sizeof(char), 2048, file);
+
+		sscanf_s(buffer, "framerate = %f", &setting.framerate);
+
+
+		fclose(file);
+
+
+
+
+
+
+	}
 
 	void Engine::BeginPlay()
 	{

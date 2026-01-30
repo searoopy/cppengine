@@ -1,0 +1,87 @@
+#include "Player.h"
+#include <iostream>
+#include "Engine/Engine.h"
+//#include "..\includes\engine\Cor"
+#include "Core/Input.h"
+#include <Windows.h>
+#include "Utill/utill.h"
+#include "Actor/Box.h"
+#include "Level/Level.h"
+
+using namespace wanted;
+
+Player::Player()
+	: super('T', Vector2(5,3), Color::Green )
+{
+	sortingorder = 10;
+}
+
+void Player::BeginPlay()
+{
+	Actor::BeginPlay();
+
+	//std::cout << "Player ::beginplay()\n";
+}
+
+
+
+void Player::Tick(float deltaTime)
+{
+	super::Tick(deltaTime);
+
+
+
+	//if (wanted::Input::Get()->GetKeyDown(VK_ESCAPE))
+	if(wanted::Input::Get().GetKeyDown(VK_ESCAPE))
+	{
+		//게임 엔진 종료 요청
+		std::cout << "Escape key pressed. Quitting engine.\n";
+		//QuitEngine();
+
+		wanted::Engine::Get().QuitEngine();
+	}
+
+	if (Input::Get().GetKeyKey(VK_RIGHT) && GetPosition().x < 20 )
+	{
+		Vector2 newPos = GetPosition();
+		newPos.x += 1;
+		SetPosition(newPos);
+	}
+
+	if (Input::Get().GetKeyKey(VK_LEFT) && GetPosition().x > 0)
+	{
+		Vector2 newPos = GetPosition();
+		newPos.x -= 1;
+		SetPosition(newPos);
+	}
+
+	if (Input::Get().GetKeyKey(VK_UP) && GetPosition().y > 0)
+	{
+		Vector2 newPos = GetPosition();
+		newPos.y -= 1;
+		SetPosition(newPos);
+	}
+
+	if (Input::Get().GetKeyKey(VK_DOWN) && GetPosition().y < 20)
+	{
+		Vector2 newPos = GetPosition();
+		newPos.y += 1;
+		SetPosition(newPos);
+	}
+
+
+	if (Input::Get().GetKeyKey(VK_SPACE) )
+	{
+		if (owner)
+		{
+			owner->AddNewActor(new Box(GetPosition()));
+		}
+	}
+
+	//std::cout << "Player::tick(). deltatime " << deltaTime
+	//	<< ", FPS " << (1.0f / deltaTime) << "\n";
+}
+void Player::Draw()
+{
+	Actor::Draw();
+}

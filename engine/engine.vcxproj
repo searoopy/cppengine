@@ -55,16 +55,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_BUILD_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h $(SolutionDir)\includes\engine\ /e /y</Command>
+      <Command>xcopy *.h ..\includes\engine\ /e /y</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\engine.dll ..\library\engine\$(Platform)\$(Configuration)\ /e /y
@@ -77,16 +77,16 @@ xcopy $(OutDir)\engine.lib ..\library\engine\$(Platform)\$(Configuration)\ /e /y
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_BUILD_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h $(SolutionDir)\includes\engine\ /e /y</Command>
+      <Command>xcopy *.h ..\includes\engine\ /e /y</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\engine.dll ..\library\engine\$(Platform)\$(Configuration)\ /e /y
@@ -98,14 +98,19 @@ xcopy $(OutDir)\engine.lib ..\library\engine\$(Platform)\$(Configuration)\ /e /y
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Common\Common.h" />
+    <ClInclude Include="Common\RTTI.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Level\Level.h" />
-    <ClInclude Include="Render\render.h" />
+    <ClInclude Include="Math\color.h" />
+    <ClInclude Include="Math\Vector2.h" />
+    <ClInclude Include="Core\Renderer.h" />
+    <ClInclude Include="Utill\utill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

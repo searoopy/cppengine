@@ -7,6 +7,11 @@ namespace wanted
 
 	class WANTED_API Engine
 	{
+		struct EngineSetting
+		{
+			float framerate = 0.0f;
+		};
+
 
 	public:
 		Engine();
@@ -22,6 +27,10 @@ namespace wanted
 		static Engine& Get();
 
 	private:
+		//정리 함수.
+		void Shutdown();
+		
+		void LoadSetting();
 
 		void BeginPlay();
 
@@ -29,10 +38,14 @@ namespace wanted
 
 		void Draw();
 
+	
+
 	private:
 		//종료 플래그.
 		bool isQuit = false;
 
+		//엔진 설정 값.
+		EngineSetting setting;
 
 		//입력 관리자
 		Input* input = nullptr;

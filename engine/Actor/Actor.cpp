@@ -1,10 +1,18 @@
-#include "Actor.h"
+#include <iostream>
+#include <Windows.h>
 
+#include "Utill/utill.h"
+#include "Core/Renderer.h"
+#include "Actor.h"
+#include "Math/color.h"
 
 namespace wanted
 {
 
-	Actor::Actor()
+	Actor::Actor(const char image ,
+		const Vector2& position,
+		Color color)
+		:image(image), position(position), color(color)
 	{
 	}
 
@@ -25,6 +33,16 @@ namespace wanted
 	}
 	void Actor::Draw()
 	{
+		Renderer::Draw(position, image, color);
+
+	}
+
+	void Actor::SetPosition(const Vector2& newPosition)
+	{
+		Renderer::Draw(position, ' '); //이전 위치 지우기.
+
+		position = newPosition;
+
 	}
 
 
