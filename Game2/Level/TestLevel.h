@@ -10,5 +10,9 @@ class TestLevel :public wanted::Level
 
 public:
 	TestLevel();
+
+
+private:
+	void LoadMap(const char* filename);
 };
 

@@ -11,7 +11,13 @@
 using namespace wanted;
 
 Player::Player()
-	: super('T', Vector2(5,3), Color::Green )
+	: super('P', Vector2(5,3), Color::Yellow)
+{
+	sortingorder = 10;
+}
+
+Player::Player(const Vector2& pos)
+	: super('P', pos, Color::Yellow)
 {
 	sortingorder = 10;
 }
