@@ -55,7 +55,7 @@ void Player::Tick(float deltaTime)
 		wanted::Engine::Get().QuitEngine();
 	}
 
-	if (Input::Get().GetKeyDown(VK_RIGHT) && GetPosition().x < 20 )
+	if (Input::Get().GetKeyDown(VK_RIGHT)  )
 	{
 
 		Vector2 newPos(GetPosition().x + 1, GetPosition().y);
@@ -70,7 +70,7 @@ void Player::Tick(float deltaTime)
 		SetPosition(newPos);*/
 	}
 
-	if (Input::Get().GetKeyDown(VK_LEFT) && GetPosition().x > 0)
+	if (Input::Get().GetKeyDown(VK_LEFT) )
 	{
 		Vector2 newPos(GetPosition().x - 1, GetPosition().y);
 
@@ -80,7 +80,7 @@ void Player::Tick(float deltaTime)
 		}
 	}
 
-	if (Input::Get().GetKeyDown(VK_UP) && GetPosition().y > 0)
+	if (Input::Get().GetKeyDown(VK_UP) )
 	{
 		Vector2 newPos(GetPosition().x , GetPosition().y -1 );
 
@@ -90,7 +90,7 @@ void Player::Tick(float deltaTime)
 		}
 	}
 
-	if (Input::Get().GetKeyDown(VK_DOWN) && GetPosition().y < 20)
+	if (Input::Get().GetKeyDown(VK_DOWN) )
 	{
 		Vector2 newPos(GetPosition().x , GetPosition().y+1);
 
