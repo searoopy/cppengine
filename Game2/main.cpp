@@ -6,15 +6,16 @@
 #include "Level/SokobanLevel.h"
 #include "Actor/Actor.h"
 #include "Actor/Player.h"
+#include "Game/Game.h"
 
 
 using namespace wanted;
 
 int main()
 {
-	wanted::Engine engine;
-	engine.SetNewLevel(new SokobanLevel());
-	engine.Run();
+	//wanted::Engine engine;
+	//engine.SetNewLevel(new SokobanLevel());
+	//engine.Run();
 
 	//TestLevel* level = new TestLevel();
 	//Actor* actor = new Actor();
@@ -36,5 +37,8 @@ int main()
 	//{
 	//	std::cout << "actor is not Player type.\n";
 	//}
+
+	Game game;
+	game.Run();
 
 }

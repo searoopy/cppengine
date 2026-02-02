@@ -15,7 +15,7 @@ namespace wanted
 
 	public:
 		Engine();
-		~Engine();
+		virtual ~Engine();
 		
 		void Run();
 
@@ -26,7 +26,7 @@ namespace wanted
 
 		static Engine& Get();
 
-	private:
+	protected:
 		//정리 함수.
 		void Shutdown();
 		
@@ -40,7 +40,7 @@ namespace wanted
 
 	
 
-	private:
+	protected:
 		//종료 플래그.
 		bool isQuit = false;
 

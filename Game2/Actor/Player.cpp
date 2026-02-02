@@ -7,6 +7,7 @@
 #include "Utill/utill.h"
 #include "Actor/Box.h"
 #include "Level/Level.h"
+#include "Game/Game.h"
 
 #include "Interface/ICanPlayerMove.h"
 
@@ -36,6 +37,13 @@ void Player::BeginPlay()
 void Player::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
+
+
+	if (wanted::Input::Get().GetKeyDown(VK_ESCAPE))
+	{
+		Game::Get().ToggleMenu();
+		return;
+	}
 
 
 
