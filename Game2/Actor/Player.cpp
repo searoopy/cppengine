@@ -8,6 +8,8 @@
 #include "Actor/Box.h"
 #include "Level/Level.h"
 
+#include "Interface/ICanPlayerMove.h"
+
 using namespace wanted;
 
 Player::Player()
@@ -37,6 +39,12 @@ void Player::Tick(float deltaTime)
 
 
 
+	static ICanPlayerMove* canPlayerMoveInterface = nullptr;
+	if (!canPlayerMoveInterface && GetOwner())
+	{
+		canPlayerMoveInterface = dynamic_cast<ICanPlayerMove*>(GetOwner());
+	}
+
 	//if (wanted::Input::Get()->GetKeyDown(VK_ESCAPE))
 	if(wanted::Input::Get().GetKeyDown(VK_ESCAPE))
 	{
@@ -47,36 +55,53 @@ void Player::Tick(float deltaTime)
 		wanted::Engine::Get().QuitEngine();
 	}
 
-	if (Input::Get().GetKeyKey(VK_RIGHT) && GetPosition().x < 20 )
+	if (Input::Get().GetKeyDown(VK_RIGHT) && GetPosition().x < 20 )
 	{
-		Vector2 newPos = GetPosition();
+
+		Vector2 newPos(GetPosition().x + 1, GetPosition().y);
+
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
+
+	/*	Vector2 newPos = GetPosition();
 		newPos.x += 1;
-		SetPosition(newPos);
+		SetPosition(newPos);*/
 	}
 
-	if (Input::Get().GetKeyKey(VK_LEFT) && GetPosition().x > 0)
+	if (Input::Get().GetKeyDown(VK_LEFT) && GetPosition().x > 0)
 	{
-		Vector2 newPos = GetPosition();
-		newPos.x -= 1;
-		SetPosition(newPos);
+		Vector2 newPos(GetPosition().x - 1, GetPosition().y);
+
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
 	}
 
-	if (Input::Get().GetKeyKey(VK_UP) && GetPosition().y > 0)
+	if (Input::Get().GetKeyDown(VK_UP) && GetPosition().y > 0)
 	{
-		Vector2 newPos = GetPosition();
-		newPos.y -= 1;
-		SetPosition(newPos);
+		Vector2 newPos(GetPosition().x , GetPosition().y -1 );
+
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
 	}
 
-	if (Input::Get().GetKeyKey(VK_DOWN) && GetPosition().y < 20)
+	if (Input::Get().GetKeyDown(VK_DOWN) && GetPosition().y < 20)
 	{
-		Vector2 newPos = GetPosition();
-		newPos.y += 1;
-		SetPosition(newPos);
+		Vector2 newPos(GetPosition().x , GetPosition().y+1);
+
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
 	}
 
 
-	if (Input::Get().GetKeyKey(VK_SPACE) )
+	if (Input::Get().GetKeyDown(VK_SPACE) )
 	{
 		if (owner)
 		{

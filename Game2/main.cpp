@@ -3,7 +3,7 @@
 
 #include "Engine/Engine.h"
 #include "Level/Level.h"
-#include "Level/TestLevel.h"
+#include "Level/SokobanLevel.h"
 #include "Actor/Actor.h"
 #include "Actor/Player.h"
 
@@ -13,7 +13,7 @@ using namespace wanted;
 int main()
 {
 	wanted::Engine engine;
-	engine.SetNewLevel(new TestLevel());
+	engine.SetNewLevel(new SokobanLevel());
 	engine.Run();
 
 	//TestLevel* level = new TestLevel();

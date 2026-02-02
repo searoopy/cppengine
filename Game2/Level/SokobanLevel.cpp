@@ -1,4 +1,4 @@
-#include "TestLevel.h"
+#include "SokobanLevel.h"
 #include "Actor/Player.h"
 #include "Actor/Wall.h"
 #include "Actor/Ground.h"
@@ -22,14 +22,14 @@ t: 타겟
 
 
 
-TestLevel::TestLevel()
+SokobanLevel::SokobanLevel()
 {
 	//AddNewActor(new Player());
 	
 	LoadMap("stage1.txt");
 }
 
-void TestLevel::LoadMap(const char* filename)
+void SokobanLevel::LoadMap(const char* filename)
 {
 
 	//파일 로드
@@ -151,3 +151,20 @@ void TestLevel::LoadMap(const char* filename)
 
 	fclose(file);
 }
+
+bool SokobanLevel::CanMove(const Vector2& playerPos, const Vector2& nextPos)
+{
+	//레벨에 있는 박스 엑터 모으기.
+	//박스는 플레이어가 밀기등 추가적으로 처리하기 때문.
+
+	std::vector<Actor*> boxes;
+
+	for (Actor* const actor : actors)
+	{
+
+	}
+
+
+	return false;
+}
+

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Actor/Actor.h"
-
+#include "Interface/ICanPlayerMove.h"
 
 using namespace wanted;
 
