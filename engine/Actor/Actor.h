@@ -16,7 +16,7 @@ namespace wanted
 		RTTI_DECLARATIONS(Actor, RTTI)
 
 	public:
-		Actor(const char image = ' ', 
+		Actor(const char* image = " " ,
 			const Vector2& position = Vector2::Zero,
 			Color color = Color::White);
 		virtual ~Actor();
@@ -63,7 +63,7 @@ namespace wanted
 		//현재 프레임에 삭제요청 받았는지
 		bool destroyRequested = false;
 
-		char image = ' ';
+		char* image = nullptr;
 
 		Color color = Color::White;
 

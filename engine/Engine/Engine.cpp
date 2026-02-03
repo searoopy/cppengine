@@ -6,7 +6,7 @@
 #include "Level\Level.h"
 #include "Core/Input.h"
 #include "Utill/utill.h"
-
+#include "Render/Renderer.h"
 
 
 namespace wanted
@@ -21,6 +21,10 @@ namespace wanted
 
 
 		LoadSetting();
+
+
+		//렌더러 객체 생성.
+		renderer = new Renderer(Vector2(setting.width, setting.height));
 
 		Utill::TurnOffCursor();
 
@@ -42,6 +46,8 @@ namespace wanted
 			delete input;
 			input = nullptr;
 		}
+
+		SafeDelete(renderer);
 
 	}
 
@@ -188,16 +194,36 @@ namespace wanted
 		//파일에서 읽기.
 		size_t readsize = fread(buffer, sizeof(char), 2048, file);
 
-		sscanf_s(buffer, "framerate = %f", &setting.framerate);
+		//문자열 자르기 (파싱)
+		char* nexttoken = nullptr;
+		char* strtemp = strtok_s(buffer, "\n", &nexttoken);
+		while (strtemp)
+		{
+			char header[10] = {};
+
+
+			sscanf_s(strtemp, "%s", header, 10);
+		
+
+			if (strcmp(header, "framerate") == 0)
+			{
+				sscanf_s(strtemp, "framerate = %f", &setting.framerate);
+			}
+			else if (strcmp(header, "width") == 0)
+			{
+				sscanf_s(strtemp, "width = %d", &setting.width);
+			}
+			else if (strcmp(header, "height") == 0)
+			{
+				sscanf_s(strtemp, "height = %d", &setting.height);
+			}
+
+			//개행 문자로 문자열 분리.
+			strtemp = strtok_s(nullptr, "\n", &nexttoken);
+		}
 
 
 		fclose(file);
-
-
-
-
-
-
 	}
 
 	void Engine::BeginPlay()
@@ -237,7 +263,14 @@ namespace wanted
 			std::cout << "rrror:engine::Draw()\n";
 			return;
 		}
+
+
+		//레벨의 모든 엑터가 렌더 데이터를 제출
 		mainLevel->Draw();
+
+
+		//드로우 그리기 명혈 전달.
+		renderer->Draw();
 	}
 
 

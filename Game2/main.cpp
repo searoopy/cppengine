@@ -11,6 +11,8 @@
 
 using namespace wanted;
 
+
+
 int main()
 {
 	//wanted::Engine engine;
@@ -38,7 +40,50 @@ int main()
 	//	std::cout << "actor is not Player type.\n";
 	//}
 
+
+
 	Game game;
 	game.Run();
+
+
+
+
+
+	/*
+	const int width = 3;
+	const int height = 3;
+
+
+	CHAR_INFO chararr[width * height] = {};
+	chararr[2 * width + 1].Char.AsciiChar = 'P';
+	chararr[2 * width + 1].Attributes = FOREGROUND_GREEN;
+
+
+	COORD pos ={};
+	
+	COORD size;
+	size.X = 3;
+	size.Y = 3;	
+
+
+	SMALL_RECT writeRegion = {
+		0,
+		0,
+		static_cast<short>(width),
+		static_cast<short>(height),
+	};
+
+	WriteConsoleOutputA(
+		GetStdHandle(STD_OUTPUT_HANDLE),
+		chararr,
+		size,
+		pos,
+		&writeRegion
+	);	
+
+	std::cin.get();
+
+	*/
+
 
 }

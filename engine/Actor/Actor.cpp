@@ -2,23 +2,28 @@
 #include <Windows.h>
 
 #include "Utill/utill.h"
-#include "Core/Renderer.h"
+#include "Render/Renderer.h"
 #include "Actor.h"
 #include "Math/color.h"
 
 namespace wanted
 {
 
-	Actor::Actor(const char image ,
+	Actor::Actor(const char* image ,
 		const Vector2& position,
 		Color color)
-		:image(image), position(position), color(color)
+		: position(position), color(color)
 	{
+
+		size_t length = strlen(image) + 1;
+		this->image = new char[length];
+		strcpy_s(this->image, length, image);
 	}
 
 	Actor::~Actor()
 	{
-		
+		SafeDeleteArray(image);
+
 	}
 
 
@@ -33,13 +38,19 @@ namespace wanted
 	}
 	void Actor::Draw()
 	{
-		Renderer::Draw(position, image, color);
-
+		//Renderer::Draw(position, image, color);
+		Renderer::Get().Submit(
+			image, position, color, sortingorder);
 	}
 
 	void Actor::SetPosition(const Vector2& newPosition)
 	{
-		Renderer::Draw(position, ' '); //이전 위치 지우기.
+		//Renderer::Draw(position, ' '); //이전 위치 지우기.
+
+		if (position == newPosition)
+		{
+			return;
+		}
 
 		position = newPosition;
 

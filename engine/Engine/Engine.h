@@ -4,12 +4,21 @@ namespace wanted
 {
 	class Level;
 	class Input;
+	class Renderer;
 
 	class WANTED_API Engine
 	{
 		struct EngineSetting
 		{
+			//프레임 속도
 			float framerate = 0.0f;
+
+
+			//화면 너비
+			int width = 0;
+
+			//화면높이
+			int height = 0;
 		};
 
 
@@ -49,6 +58,8 @@ namespace wanted
 
 		//입력 관리자
 		Input* input = nullptr;
+
+		Renderer* renderer = nullptr;
 
 		//메인 레벨
 		class Level* mainLevel = nullptr;

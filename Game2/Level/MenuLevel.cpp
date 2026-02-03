@@ -2,7 +2,7 @@
 #include "Game/Game.h"
 #include "Core/Input.h"
 #include "Utill/utill.h"
-
+#include "Render/Renderer.h"
 #include <iostream>
 
 MenuLevel::MenuLevel()
@@ -89,16 +89,24 @@ void MenuLevel::Draw()
 	Utill::SetConsoleTextColor(Color::White);
 
 	//텍스트 출력.
-	std::cout << "Sokoban Game\n\n";
+
+	Renderer::Get().Submit("Sokoban Game", Vector2::Zero);
+	//std::cout << "Sokoban Game\n\n";
 
 	for (int i = 0; i < static_cast<int>(items.size()); ++i)
 	{
 		Color textColor = (i == currentIndex) ? selectedColor : unSelectedColor;
 		// 색상 설정.
-		Utill::SetConsoleTextColor(textColor);
+		//Utill::SetConsoleTextColor(textColor);
+
+		Renderer::Get().Submit(
+		items[i]->text,
+			Vector2(0,2+i),
+			textColor
+			);
 
 		// 텍스트 출력.
-		std::cout << items[i]->text << "\n";
+		//std::cout << items[i]->text << "\n";
 	}
 	
 
