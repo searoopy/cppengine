@@ -148,7 +148,6 @@ namespace wanted
 
 
 		//±×¸®±â.
-
 		GetCurrentBuffer()->Draw(frame->charInfo);
 
 
